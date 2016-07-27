@@ -17,8 +17,7 @@ public class DeleteCommand implements Command {
     try {
       SolrClient solrClient = null;
       try {
-        solrClient =
-            new HttpSolrClient.Builder((String) attrs.get("solr_url")).build();
+        solrClient = new HttpSolrClient.Builder((String) attrs.get("solr_url")).build();
 
         UpdateResponse response =
             solrClient.deleteById((String) attrs.get("unique_key_field_value"));
@@ -27,17 +26,14 @@ public class DeleteCommand implements Command {
 
         responseJSON = String.format("{\"status\":%d}", response.getStatus());
       } catch (IOException e) {
-        responseJSON = String.format("{\"status\":\"NG\", \"message\":\"%s\"}",
-            e.getMessage());
+        responseJSON = String.format("{\"status\":1, \"message\":\"%s\"}", e.getMessage());
       } catch (SolrServerException e) {
-        responseJSON = String.format("{\"status\":\"NG\", \"message\":\"%s\"}",
-            e.getMessage());
+        responseJSON = String.format("{\"status\":1, \"message\":\"%s\"}", e.getMessage());
       } finally {
         solrClient.close();
       }
     } catch (IOException e) {
-      responseJSON = String.format("{\"status\":\"NG\", \"message\":\"%s\"}",
-          e.getMessage());
+      responseJSON = String.format("{\"status\":1, \"message\":\"%s\"}", e.getMessage());
     }
 
     System.out.println(responseJSON);

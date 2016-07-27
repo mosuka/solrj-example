@@ -63,7 +63,7 @@ public class SearchCommand implements Command {
         }
       }
     } catch (IOException e) {
-      responseMap.put("status", -1);
+      responseMap.put("status", 1);
       responseMap.put("message", e.getMessage());
     }
 
@@ -71,7 +71,7 @@ public class SearchCommand implements Command {
       ObjectMapper mapper = new ObjectMapper();
       responseJSON = mapper.writeValueAsString(responseMap);
     } catch (IOException e) {
-      responseJSON = String.format("{\"status\":-1, \"message\":\"%s\"}", e.getMessage());
+      responseJSON = String.format("{\"status\":1, \"message\":\"%s\"}", e.getMessage());
     }
     System.out.println(responseJSON);
   }

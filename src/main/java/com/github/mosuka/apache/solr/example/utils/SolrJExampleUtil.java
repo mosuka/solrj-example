@@ -15,8 +15,8 @@ public class SolrJExampleUtil {
 
   public static SolrInputDocument createDocument(String dataStr)
       throws JsonParseException, JsonMappingException, IOException {
-    Map<String, Object> dataMap = new ObjectMapper().readValue(dataStr,
-        new TypeReference<HashMap<String, Object>>() {
+    Map<String, Object> dataMap =
+        new ObjectMapper().readValue(dataStr, new TypeReference<HashMap<String, Object>>() {
         });
 
     SolrInputDocument document = new SolrInputDocument();

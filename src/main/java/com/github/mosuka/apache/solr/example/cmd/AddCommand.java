@@ -32,16 +32,16 @@ public class AddCommand implements Command {
 
         responseJSON = String.format("{\"status\":%d}", response.getStatus());
       } catch (IOException e) {
-        responseJSON = String.format("{\"status\":\"NG\", \"message\":\"%s\"}", e.getMessage());
+        responseJSON = String.format("{\"status\":1, \"message\":\"%s\"}", e.getMessage());
       } catch (SolrServerException e) {
-        responseJSON = String.format("{\"status\":\"NG\", \"message\":\"%s\"}", e.getMessage());
+        responseJSON = String.format("{\"status\":1, \"message\":\"%s\"}", e.getMessage());
       } finally {
         if (solrClient != null) {
           solrClient.close();
         }
       }
     } catch (IOException e) {
-      responseJSON = String.format("{\"status\":\"NG\", \"message\":\"%s\"}", e.getMessage());
+      responseJSON = String.format("{\"status\":1, \"message\":\"%s\"}", e.getMessage());
     }
 
     System.out.println(responseJSON);

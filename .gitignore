@@ -12,6 +12,7 @@
 hs_err_pid*
 /bin/
 /target/
+/test-target/
 
 # eclipse
 .classpath
