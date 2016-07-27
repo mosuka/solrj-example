@@ -34,6 +34,7 @@
 
   <property name="test.lib.dir" value="test-lib" />
   <property name="test.src.dir" value="src/test/java" />
+  <property name="test.resources.dir" value="src/test/resources" />
 
   <property name="dist.dir" value="dist" />
   <property name="package.dir" value="package" />
@@ -88,6 +89,8 @@
     <mkdir dir="${test.build.dir}" />
     <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false" classpathref="compile.test.classpath" />
   	
+    <copy file="${test.resources.dir}/log4j.properties" todir="${test.build.dir}"/>
+
     <junit fork="true" printsummary="true" maxmemory="512m" haltonfailure="yes">
       <formatter type="plain" usefile="false" />
       <classpath refid="run.test.classpath" />
