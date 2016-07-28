@@ -19,33 +19,40 @@ import net.sourceforge.argparse4j.inf.Subparsers;
 
 public class SolrJExampleCLI {
   public static void main(String[] args) {
-    ArgumentParser argumentParser =
-        ArgumentParsers.newArgumentParser("java solr-example.jar");
+    ArgumentParser argumentParser = ArgumentParsers.newArgumentParser("java solr-example.jar");
 
-    Subparsers commandSubpersers = argumentParser.addSubparsers()
-        .title("Available Commands").metavar("COMMAND");
+    Subparsers commandSubpersers =
+        argumentParser.addSubparsers().title("Available Commands").metavar("COMMAND");
 
-    Subparser addCmdSubParser = commandSubpersers.addParser("add")
-        .help("Add data to Solr.").setDefault("command", new AddCommand());
+    Subparser addCmdSubParser = commandSubpersers.addParser("add").help("Add data to Solr.")
+        .setDefault("command", new AddCommand());
     addCmdSubParser.addArgument("-s", "--solr-url").help("Solr URL.");
-    addCmdSubParser.addArgument("-d", "--data")
-        .help("Document data formatted using JSON.");
+    addCmdSubParser.addArgument("-z", "--zookeeper-host").help("ZooKeeper host address.");
+    addCmdSubParser.addArgument("-r", "--zookeeper-chroot").setDefault("/solr")
+        .help("ZooKeeper chroot.");
+    addCmdSubParser.addArgument("-c", "--collection").setDefault("collection1")
+        .help("Index collection name. Required if you use the -z parameter.");
+    addCmdSubParser.addArgument("-d", "--data").help("Document data formatted using JSON.");
 
-    Subparser deleteCmdSubParser =
-        commandSubpersers.addParser("delete").help("Delete data from Solr.")
-            .setDefault("command", new DeleteCommand());
-    deleteCmdSubParser.addArgument("-s", "--solr-url")
-        .help("Index directory path.");
-    deleteCmdSubParser.addArgument("-d", "--data")
-        .help("Document data formatted using JSON.");
+    Subparser deleteCmdSubParser = commandSubpersers.addParser("delete")
+        .help("Delete data from Solr.").setDefault("command", new DeleteCommand());
+    deleteCmdSubParser.addArgument("-s", "--solr-url").help("Index directory path.");
+    deleteCmdSubParser.addArgument("-z", "--zookeeper-host").help("ZooKeeper host address.");
+    deleteCmdSubParser.addArgument("-r", "--zookeeper-chroot").setDefault("/solr")
+        .help("ZooKeeper chroot.");
+    deleteCmdSubParser.addArgument("-c", "--collection").setDefault("collection1")
+        .help("Index collection name. Required if you use the -z parameter.");
+    deleteCmdSubParser.addArgument("-u", "--unique-id").help("Unique ID.");
 
-    Subparser searchCmdSubParser =
-        commandSubpersers.addParser("search").help("Search data of index.")
-            .setDefault("command", new SearchCommand());
-    searchCmdSubParser.addArgument("-s", "--solr-url")
-        .help("Index directory path.");
-    searchCmdSubParser.addArgument("-q", "--query")
-        .help("Query to search index.");
+    Subparser searchCmdSubParser = commandSubpersers.addParser("search")
+        .help("Search data of index.").setDefault("command", new SearchCommand());
+    searchCmdSubParser.addArgument("-s", "--solr-url").help("Index directory path.");
+    searchCmdSubParser.addArgument("-z", "--zookeeper-host").help("ZooKeeper host address.");
+    searchCmdSubParser.addArgument("-r", "--zookeeper-chroot").setDefault("/solr")
+        .help("ZooKeeper chroot.");
+    searchCmdSubParser.addArgument("-c", "--collection").setDefault("collection1")
+        .help("Index collection name. Required if you use the -z parameter.");
+    searchCmdSubParser.addArgument("-q", "--query").help("Query to search index.");
 
     try {
       Namespace ns = argumentParser.parseArgs(args);

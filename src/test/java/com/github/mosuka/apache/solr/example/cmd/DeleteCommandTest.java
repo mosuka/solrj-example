@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Slow
-public class AddCommandTest extends SolrCloudTestCase {
+public class DeleteCommandTest extends SolrCloudTestCase {
   private ByteArrayOutputStream _baos;
   private PrintStream _out;
 
@@ -44,6 +44,14 @@ public class AddCommandTest extends SolrCloudTestCase {
   public void setUp() throws Exception {
     super.setUp();
 
+    String solrUrl = cluster.getJettySolrRunners().get(0).getBaseUrl() + "/" + COLLECTION;
+    Map<String, Object> attrs = new HashMap<String, Object>();
+    attrs.put("solr_url", solrUrl);
+    attrs.put("data",
+        "{\"id\":\"1\",\"title_txt_en\":\"SolrJ\",\"description_txt_en\":\"SolrJ is a library for Solr.\"}");
+    AddCommand addCommand = new AddCommand();
+    addCommand.execute(attrs);
+
     _baos = new ByteArrayOutputStream();
     _out = System.out;
     System.setOut(new PrintStream(new BufferedOutputStream(_baos)));
@@ -62,11 +70,10 @@ public class AddCommandTest extends SolrCloudTestCase {
 
     Map<String, Object> attrs = new HashMap<String, Object>();
     attrs.put("solr_url", solrUrl);
-    attrs.put("data",
-        "{\"id\":\"1\",\"title_txt_en\":\"SolrJ\",\"description_txt_en\":\"SolrJ is a library for Solr.\"}");
+    attrs.put("unique_id", "1");
 
-    AddCommand addCommand = new AddCommand();
-    addCommand.execute(attrs);
+    DeleteCommand deleteCommand = new DeleteCommand();
+    deleteCommand.execute(attrs);
 
     System.out.flush();
 
@@ -94,11 +101,10 @@ public class AddCommandTest extends SolrCloudTestCase {
     attrs.put("zookeeper_host", zooKeeperHost);
     attrs.put("zookeeper_chroot", zooKeeperChroot);
     attrs.put("collection", collection);
-    attrs.put("data",
-        "{\"id\":\"1\",\"title_txt_en\":\"SolrCloud\",\"description_txt_en\":\"SolrCloud is the name of a set of new distributed capabilities in Solr.\"}");
+    attrs.put("unique_id", "1");
 
-    AddCommand addCommand = new AddCommand();
-    addCommand.execute(attrs);
+    DeleteCommand deleteCommand = new DeleteCommand();
+    deleteCommand.execute(attrs);
 
     System.out.flush();
 
