@@ -26,33 +26,42 @@ public class SolrJExampleCLI {
 
     Subparser addCmdSubParser = commandSubpersers.addParser("add").help("Add data to Solr.")
         .setDefault("command", new AddCommand());
-    addCmdSubParser.addArgument("-s", "--solr-url").help("Solr URL.");
-    addCmdSubParser.addArgument("-z", "--zookeeper-host").help("ZooKeeper host address.");
+    addCmdSubParser.addArgument("-s", "--solr-url")
+        .help("Solr URL.\nExample: http://localhost:8983/solr/collection1");
+    addCmdSubParser.addArgument("-z", "--zookeeper-host")
+        .help("ZooKeeper host address.\nExample: localhost:2181");
     addCmdSubParser.addArgument("-r", "--zookeeper-chroot").setDefault("/solr")
-        .help("ZooKeeper chroot.");
+        .help("ZooKeeper chroot.\nExample: /solr");
     addCmdSubParser.addArgument("-c", "--collection").setDefault("collection1")
-        .help("Index collection name. Required if you use the -z parameter.");
-    addCmdSubParser.addArgument("-d", "--data").help("Document data formatted using JSON.");
+        .help("Index collection name. Required if you use the -z parameter.\nExample: collection1");
+    addCmdSubParser.addArgument("-d", "--data")
+        .help("Document data formatted using JSON.\nExample: {\"id\":\"1\",\"title\":\"SolrJ\"}");
 
     Subparser deleteCmdSubParser = commandSubpersers.addParser("delete")
         .help("Delete data from Solr.").setDefault("command", new DeleteCommand());
-    deleteCmdSubParser.addArgument("-s", "--solr-url").help("Index directory path.");
-    deleteCmdSubParser.addArgument("-z", "--zookeeper-host").help("ZooKeeper host address.");
+    deleteCmdSubParser.addArgument("-s", "--solr-url")
+        .help("Solr URL.\nExample: http://localhost:8983/solr/collection1");
+    deleteCmdSubParser.addArgument("-z", "--zookeeper-host")
+        .help("ZooKeeper host address.\nExample: localhost:2181");
     deleteCmdSubParser.addArgument("-r", "--zookeeper-chroot").setDefault("/solr")
-        .help("ZooKeeper chroot.");
+        .help("ZooKeeper chroot.\nExample: /solr");
     deleteCmdSubParser.addArgument("-c", "--collection").setDefault("collection1")
-        .help("Index collection name. Required if you use the -z parameter.");
-    deleteCmdSubParser.addArgument("-u", "--unique-id").help("Unique ID.");
+        .help("Index collection name. Required if you use the -z parameter.\nExample: collection1");
+    deleteCmdSubParser.addArgument("-u", "--unique-id")
+        .help("Unique ID of the data to be deleted.\nExample: 1");
 
     Subparser searchCmdSubParser = commandSubpersers.addParser("search")
         .help("Search data of index.").setDefault("command", new SearchCommand());
-    searchCmdSubParser.addArgument("-s", "--solr-url").help("Index directory path.");
-    searchCmdSubParser.addArgument("-z", "--zookeeper-host").help("ZooKeeper host address.");
+    searchCmdSubParser.addArgument("-s", "--solr-url")
+        .help("Solr URL.\nExample: http://localhost:8983/solr/collection1");
+    searchCmdSubParser.addArgument("-z", "--zookeeper-host")
+        .help("ZooKeeper host address.\nExample: localhost:2181");
     searchCmdSubParser.addArgument("-r", "--zookeeper-chroot").setDefault("/solr")
-        .help("ZooKeeper chroot.");
+        .help("ZooKeeper chroot.\nExample: /solr");
     searchCmdSubParser.addArgument("-c", "--collection").setDefault("collection1")
-        .help("Index collection name. Required if you use the -z parameter.");
-    searchCmdSubParser.addArgument("-q", "--query").help("Query to search index.");
+        .help("Index collection name. Required if you use the -z parameter.\nExample: collection1");
+    searchCmdSubParser.addArgument("-q", "--query")
+        .help("Query to search index.\nExample: title:SolrJ");
 
     try {
       Namespace ns = argumentParser.parseArgs(args);
